@@ -1,26 +1,34 @@
 const mineflayer = require('mineflayer');
 const express = require('express');
 
-// Create express app for keepalive
+// Create Express server for keep-alive
 const app = express();
 const port = process.env.PORT || 3000;
-app.get('/', (_, res) => res.send('✅ Aternos Bot is alive'));
-app.listen(port, () => console.log(`🌐 Web server running on port ${port}`));
+app.get('/', (_, res) => res.send('✅ Bot is alive'));
+app.listen(port, () => console.log(`🌐 Express running on port ${port}`));
 
-// Create the Minecraft bot
+// Function to create and manage bot
 function createBot() {
   const bot = mineflayer.createBot({
     host: 'Anasvirat.aternos.me',
-    port: 59769,
-    username: 'raja',
-    auth: 'offline'
+    port: 59769, // ⚠️ Aternos may change this
+    username: 'Raja',
+    auth: 'offline' // cracked account
   });
 
   bot.on('login', () => {
-    console.log('✅ Bot connected');
+    console.log('✅ Bot logged in');
+
+    // Chat + anti-AFK movement every 10s
     setInterval(() => {
       bot.chat('hi bros');
+      bot.setControlState('jump', true);
+      setTimeout(() => bot.setControlState('jump', false), 500); // quick jump
     }, 10000);
+  });
+
+  bot.on('spawn', () => {
+    console.log('🌍 Bot spawned into the world');
   });
 
   bot.on('death', () => {
@@ -29,7 +37,7 @@ function createBot() {
   });
 
   bot.on('end', () => {
-    console.log('🔁 Bot disconnected. Reconnecting...');
+    console.log('🔁 Disconnected. Reconnecting in 5s...');
     setTimeout(createBot, 5000);
   });
 
