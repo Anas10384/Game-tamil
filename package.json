@@ -1,6 +1,7 @@
 {
   "name": "aternos-bot",
   "version": "1.0.0",
+  "description": "24/7 Minecraft bot for Aternos with random movement and chat every 3 minutes",
   "main": "bot.js",
   "scripts": {
     "start": "node bot.js"
