@@ -30,13 +30,20 @@ function createBot() {
     console.log('❌ Error:', err);
   });
 
-  // Optional: walk/jump to avoid AFK kicks
+  // Jump every 30 seconds to stay AFK
   setInterval(() => {
     if (bot.entity && bot.entity.position) {
       bot.setControlState('jump', true);
       setTimeout(() => bot.setControlState('jump', false), 500);
     }
-  }, 30000); // every 30 seconds
+  }, 30000); // every 30 sec
+
+  // Say "hi bro" every 2 minutes
+  setInterval(() => {
+    if (bot.chat) {
+      bot.chat('hi bro');
+    }
+  }, 2 * 60 * 1000); // every 2 minutes
 }
 
 createBot();
