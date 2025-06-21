@@ -1,4 +1,5 @@
 const mineflayer = require('mineflayer');
+const status = require('./status');
 
 const options = {
   host: 'Anasvirat.aternos.me',
@@ -15,6 +16,7 @@ function createBot() {
   bot.on('login', () => {
     console.log('✅ Bot logged in');
     bot.chat('Raja is online to keep the server active!');
+    status.setStatus('✅ Aternos Bot is Online');
   });
 
   bot.on('spawn', () => {
@@ -23,27 +25,27 @@ function createBot() {
 
   bot.on('end', () => {
     console.log('🔁 Bot disconnected. Reconnecting in 5 seconds...');
+    status.setStatus('❌ Aternos Bot Disconnected. Reconnecting...');
     setTimeout(createBot, 5000);
   });
 
   bot.on('error', (err) => {
     console.log('❌ Error:', err);
+    status.setStatus(`❌ Error: ${err.message}`);
   });
 
-  // Jump every 30 seconds to stay AFK
   setInterval(() => {
-    if (bot.entity && bot.entity.position) {
+    if (bot.entity) {
       bot.setControlState('jump', true);
       setTimeout(() => bot.setControlState('jump', false), 500);
     }
-  }, 30000); // every 30 sec
+  }, 30000);
 
-  // Say "hi bro" every 2 minutes
   setInterval(() => {
     if (bot.chat) {
       bot.chat('hi bro');
     }
-  }, 2 * 60 * 1000); // every 2 minutes
+  }, 2 * 60 * 1000);
 }
 
 createBot();
