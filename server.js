@@ -9,8 +9,8 @@ app.listen(port, () => console.log(`✅ Web server running on port ${port}`));
 
 function startBot() {
   const bot = mineflayer.createBot({
-    host: 'Anasvirat.aternos.me', // Replace with your Aternos IP
-    port: 59769,
+    host: 'Amrad.aternos.me', // Replace with your Aternos IP
+    port: 45112,
     username: 'RP', // Use offline name or real email if premium
     version: false
   });
